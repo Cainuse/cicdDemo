@@ -15,4 +15,20 @@ before_install:
 script:
   - docker run -e CI=true cainuse/docker-react npm run test
 
-
+# Tell Travis where to deploy to after the tests pass
+deploy:
+  # By default travis has support for many cloud providers
+  provider: elasticbeanstalk
+  # Specify the region of the environment (can be found within the environment url)
+  region: "us-east-2"
+  app: "cicdDemo"
+  env: "Cicddemo-env"
+  bucket_name: "elasticbeanstalk-us-east-2-896110773121"
+  # We need to specify the "folder" of the bucket as the bucket is shared among many apps
+  bucket_path: "cicdDemo"
+  # Tel Travis when to deploy (In this case when main branch is updated)
+  on:
+    branch: main
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: "$AWS_SECRET_KEY"

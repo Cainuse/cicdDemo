@@ -1,24 +1,8 @@
 version: '3'
 services:
-  # This container for the main service
   web:
     build:
-      # Tells docker where to look for files
       context: .
-      # Location of the dockerfile being used
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     ports:
-      - "3000:3000"
-    # specify volumes - top for bookmark, bottom for mounting volume
-    volumes:
-      - /app/node_modules
-      - .:/app
-  # This container for testing
-  tests:
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
-    volumes:
-      - /app/node_modules
-      - .:/app
-    command: ["npm", "run", "test"]
+      - '80:80'
