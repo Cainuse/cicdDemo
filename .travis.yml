@@ -1,0 +1,18 @@
+language: generic 
+# Need super user permission when dealing with docker
+sudo: required
+
+# Tell travis that we need docker cli pre-installed
+services:
+  - docker
+
+# Series of commands to be executed before our commands are ran
+before_install:
+  # Tag the image because we will not have access to the ID of the image generated afterward
+  - docker build -t cainuse/docker-react -f Dockerfile.dev .
+
+# Tell Travis how to run our tests
+script:
+  - docker run -e CI=true cainuse/docker-react npm run test
+
+
